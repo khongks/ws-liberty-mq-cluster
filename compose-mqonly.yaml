@@ -1,0 +1,42 @@
+services:
+  sydney:
+    container_name: sydney
+    hostname: sydney
+    image: sydney
+    ports: 
+      - 1415:1414
+      - 9444:9443
+    environment:
+      MQ_QMGR_NAME: SYDNEY
+      MQ_APP_PASSWORD: passw0rd
+      LICENSE: accept
+    networks:
+      - mq-cluster
+  melbourne:
+    container_name: melbourne
+    hostname: melbourne
+    image: melbourne
+    ports: 
+      - 1416:1414
+      - 9445:9443
+    environment:
+      MQ_QMGR_NAME: MELBOURNE
+      MQ_APP_PASSWORD: passw0rd
+      LICENSE: accept
+    networks:
+      - mq-cluster
+  canberra:
+    container_name: canberra
+    hostname: canberra
+    image: canberra
+    ports:
+      - 1414:1414
+      - 9443:9443
+    environment:
+      MQ_QMGR_NAME: CANBERRA
+      MQ_APP_PASSWORD: passw0rd
+      LICENSE: accept
+    networks:
+      - mq-cluster
+networks:
+  mq-cluster:

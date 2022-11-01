@@ -1,0 +1,17 @@
+{
+    "channel": [
+      {
+        "name": "APP.SVRCONN",
+        "clientConnection": {
+          "connection": [
+            {
+              "host": "canberra",
+              "port": 1414
+            }
+          ],
+          "queueManager": " "
+        },
+        "type": "clientConnection"
+      }
+    ]
+}

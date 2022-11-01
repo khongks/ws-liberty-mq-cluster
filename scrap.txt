@@ -1,0 +1,58 @@
+export MQSERVER="APP.SVRCONN/TCP/localhost(1414)"
+export MQSAMP_USER_ID=app
+
+export MQSERVER="APP.SVRCONN/TCP/localhost(1415)"
+export MQSAMP_USER_ID=app
+
+export MQSERVER="APP.SVRCONN/TCP/localhost(1416)"
+export MQSAMP_USER_ID=app
+
+# https://www.ibm.com/support/pages/how-specify-userid-and-password-when-connecting-ibm-mq
+
+# /opt/mqm/samp/bin/amqsputc KANGAROO.Q CANBERRA
+
+/opt/mqm/samp/bin/amqsputc KANGAROO.Q
+
+printf "%s\n%s\n\n" passw0rd " " | /opt/mqm/samp/bin/amqsputc KANGAROO.Q
+
+
+/opt/mqm/samp/bin/amqsgetc KANGAROO.Q MELBOURNE 
+
+/opt/mqm/samp/bin/amqstrgc KANGAROO.Q MELBOURNE
+
+printf "%s\n%s\n\n" passw0rd MELBOURNE | /opt/mqm/samp/bin/amqstrgc KANGAROO.Q
+
+printf "%s\n%s\n\n" passw0rd MELBOURNE | /opt/mqm/samp/bin/amqsget KANGAROO.Q
+
+
+/opt/mqm/samp/bin/amqsgetc KANGAROO.Q SYDNEY 
+
+/opt/mqm/samp/bin/amqstrgc KANGAROO.Q SYDNEY
+
+printf "%s\n%s\n\n" passw0rd SYDNEY | /opt/mqm/samp/bin/amqsgetc KANGAROO.Q
+
+printf "%s\n%s\n\n" passw0rd SYDNEY | /opt/mqm/samp/bin/amqstrgc KANGAROO.Q
+
+
+# printf "%s\n%s\n\n" passw0rd CANBERRA | /opt/mqm/samp/bin/amqsputc KANGAROO.Q
+
+# docker exec -it <container name> /bin/bash
+
+
+
+SET CHLAUTH(APP.SVRCONN) TYPE(ADDRESSMAP) ADDRESS('*') USERSRC(CHANNEL) CHCKCLNT(REQUIRED) MCAUSER('app')
+
+docker exec -it canberra /bin/bash
+cd /var/mqm/qmgrs/CANBERRA/errors
+
+docker exec -it melbourne /bin/bash
+cd /var/mqm/qmgrs/MELBOURNE/errors
+
+docker exec -it sydney /bin/bash
+cd /var/mqm/qmgrs/SYDNEY/errors
+
+display clusqmgr(*) qmtype status
+
+docker-compose up -d
+
+docker-compose down
